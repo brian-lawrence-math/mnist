@@ -2,3 +2,7 @@
 README.md
 uv.lock
 
+.ipynb_checkpoints
+.DS_Store
+mnist
+temp*
