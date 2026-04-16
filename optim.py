@@ -6,6 +6,7 @@ import torch
 class GradSignOptimizer:
     def __init__(self, named_params, *, lr):
         self.named_params = [item for item in named_params]
+        self.lr = lr
 
         # initialize counts
         self.grad_counts = {}
@@ -18,7 +19,7 @@ class GradSignOptimizer:
             self.grad_counts[n] -= (self.grad_counts[n] + 4) // 8
             self.grad_counts[n] += 8 * new_count  # max val will be +- 64 or so
 
-            p.data -= lr * (self.grad_counts[n] / 64.0)
+            p.data -= self.lr * (self.grad_counts[n] / 64.0)
 
     def zero_grad(self):
         for n, p in self.named_params:
